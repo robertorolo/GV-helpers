@@ -4,9 +4,12 @@ import matplotlib.pyplot as plt
 
 class DDHBHanalysis:
     def __init__(self, ddh_array, bh_array, KSAlpha=0.05):
-        self.ddh_array = ddh_array
-        self.bh_array = bh_array
-        self.KSAlpha = KSAlpha
+        if len(ddh_array) != len(bh_array):
+            print('Array do not have the same size!')
+        else:
+            self.ddh_array = ddh_array
+            self.bh_array = bh_array
+            self.KSAlpha = KSAlpha
 
     def plot_analysis(self, outfl):
         fig, axs = plt.subplots(1, 3, figsize=(20,5))
