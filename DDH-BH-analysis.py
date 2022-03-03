@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 class DDHBHanalysis:
     def __init__(self, ddh_array, bh_array, KSAlpha=0.05):
-        if len(ddh_array) != len(bh_array):
+        if ddh_array.size != bh_array.size:
             print('Array do not have the same size!')
         else:
             self.ddh_array = ddh_array
