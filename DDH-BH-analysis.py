@@ -3,15 +3,16 @@ from scipy import stats
 import matplotlib.pyplot as plt
 
 class DDHBHanalysis:
-    def __init__(self, ddh_array, bh_array, KSAlpha=0.05):
+    def __init__(self, var_name, ddh_array, bh_array, KSAlpha=0.05):
         if ddh_array.size != bh_array.size:
             print('Array do not have the same size!')
         else:
+            self.var_name = var_name
             self.ddh_array = ddh_array
             self.bh_array = bh_array
             self.KSAlpha = KSAlpha
 
-    def plot_analysis(self, outfl):
+    def plot_analysis(self, outfl="{}_ddhbhanalysis.png"):
         fig, axs = plt.subplots(1, 3, figsize=(20,5))
 
         #defining minimum and maximum values
@@ -88,6 +89,6 @@ class DDHBHanalysis:
         axs[2].grid()
 
         #saving
-        plt.suptitle('DDH-BH analysis')
+        plt.suptitle('{} - DDH-BH analysis'.format(self.var_name))
 
         plt.savefig(outfl, dpi=300, facecolor='white', bbox_inches='tight')
