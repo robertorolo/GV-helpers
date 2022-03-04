@@ -36,7 +36,7 @@ class DDHBHanalysis:
         x_d = np.linspace(min_val, max_val, 100)
         y_r = slope*x_d+intercept
         mse = np.sqrt(((self.bh_array - self.ddh_array) ** 2).mean())
-        rel_error = np.mean(np.absolute(self.ddh_array-self.bh_array)/self.ddh_array * 100)
+        rel_error = np.mean((self.ddh_array-self.bh_array)/self.ddh_array * 100)
         statsvals = '''
         n {}
         MSE {}
