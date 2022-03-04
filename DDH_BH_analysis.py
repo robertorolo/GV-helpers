@@ -12,7 +12,10 @@ class DDHBHanalysis:
             self.bh_array = bh_array
             self.KSAlpha = KSAlpha
 
-    def plot_analysis(self, outfl="{}_ddhbhanalysis.png"):
+    def plot_analysis(self, outfl=None):
+        if outfl is None:
+            outfl = "{}_ddhbhanalysis.png".format(self.var_name)
+        
         fig, axs = plt.subplots(1, 3, figsize=(20,5))
 
         #defining minimum and maximum values
@@ -33,12 +36,14 @@ class DDHBHanalysis:
         x_d = np.linspace(min_val, max_val, 100)
         y_r = slope*x_d+intercept
         mse = np.sqrt(((self.bh_array - self.ddh_array) ** 2).mean())
+        rel_error = np.mean(np.absolute(self.ddh_array-self.bh_array)/self.ddh_array * 100)
         statsvals = '''
         n {}
         MSE {}
+        MRE {}%
         Slope {}
         R-squared {}
-        '''.format(len(self.bh_array), mse.round(2), slope.round(2), r_value.round(2))
+        '''.format(len(self.bh_array), mse.round(2), rel_error.round(2), slope.round(2), r_value.round(2))
         axs[0].plot(x_d, y_r, color='gray', linestyle='--', label='Regression line')
         axs[0].annotate(statsvals, xy=(0.6, 0.0), xycoords='axes fraction')
         axs[0].scatter(self.bh_array, self.ddh_array, color='black')
