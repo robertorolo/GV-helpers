@@ -36,14 +36,15 @@ class DDHBHanalysis:
         x_d = np.linspace(min_val, max_val, 100)
         y_r = slope*x_d+intercept
         mse = np.sqrt(((self.bh_array - self.ddh_array) ** 2).mean())
-        rel_error = np.mean((self.ddh_array-self.bh_array)/self.ddh_array * 100)
+        bias = self.bh_array-self.ddh_array
+        rel_bias = np.mean(bias)/np.std(bias)
         statsvals = '''
         n {}
         MSE {}
-        MRE {}%
+        Relative bias {}
         Slope {}
         R-squared {}
-        '''.format(len(self.bh_array), mse.round(2), rel_error.round(2), slope.round(2), r_value.round(2))
+        '''.format(len(self.bh_array), mse.round(2), rel_bias.round(2), slope.round(2), r_value.round(2))
         axs[0].plot(x_d, y_r, color='gray', linestyle='--', label='Regression line')
         axs[0].annotate(statsvals, xy=(0.6, 0.0), xycoords='axes fraction')
         axs[0].scatter(self.bh_array, self.ddh_array, color='black')
