@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
+import time
 
 def class_max_percentage_change(y, s):
     ypercentages = {}
@@ -26,8 +27,11 @@ def class_max_percentage_change(y, s):
     return np.max(perc_change)
 
 def svc_smoothing_calibration(X, Y, Z, y, outfl):
-    Crange = [10**i for i in range(-3, 3)]
-    GammaRange = [10**i for i in range(-3, 3)]
+    tick = time.time()
+    #Crange = [10**i for i in range(-3, 3)]
+    #GammaRange = [10**i for i in range(-3, 3)]
+    Crange = [10**i for i in range(-4, 4)]
+    GammaRange = [10**i for i in range(-4, 4)]
 
     matshape = (len(Crange), len(GammaRange))
     accmat = np.zeros(matshape)
@@ -78,3 +82,6 @@ def svc_smoothing_calibration(X, Y, Z, y, outfl):
 
     plt.tight_layout()
     plt.savefig(outfl, bbox_inches='tight', transparent=False)
+    tack = time.time()
+    delta = tack - tick
+    print('Took {} s'.format(round(delta, 2)))
