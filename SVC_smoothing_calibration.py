@@ -18,7 +18,7 @@ def class_max_percentage_change(y, s):
     for i in ypercentages:
         p = ypercentages[i]
         if i not in spercentages:
-            perc_change.append(999)
+            perc_change.append(float('nan'))
         else:
             pf = spercentages[i]
             perc_change.append(np.abs(p-pf))
@@ -27,7 +27,7 @@ def class_max_percentage_change(y, s):
 
 def svc_smoothing_calibration(X, Y, Z, y, outfl):
     Crange = [10**i for i in range(-3, 3)]
-    GammaRange = [10**i for i in range(-7, -1)]
+    GammaRange = [10**i for i in range(-3, 3)]
 
     matshape = (len(Crange), len(GammaRange))
     accmat = np.zeros(matshape)
@@ -50,23 +50,23 @@ def svc_smoothing_calibration(X, Y, Z, y, outfl):
             changemat[idxi, idxj] = round(perchange, 2)
 
     fig, axs = plt.subplots(1, 2, figsize=(10,5))
-    axs[0].imshow(accmat)
-    axs[1].imshow(changemat)
+    axs[0].imshow(accmat.T)
+    axs[1].imshow(changemat.T)
 
-    axs[0].set_xticks(np.arange(len(Crange)))
-    axs[0].set_xticklabels(Crange, rotation=45)
-    axs[0].set_yticks(np.arange(len(GammaRange)))
-    axs[0].set_yticklabels(GammaRange)
-    axs[0].set_xlabel('C')
-    axs[0].set_ylabel('Gamma')
+    axs[0].set_yticks(np.arange(len(Crange)))
+    axs[0].set_yticklabels(Crange, rotation=45)
+    axs[0].set_xticks(np.arange(len(GammaRange)))
+    axs[0].set_xticklabels(GammaRange, rotation=45)
+    axs[0].set_ylabel('C')
+    axs[0].set_xlabel('Gamma')
 
 
-    axs[1].set_xticks(np.arange(len(Crange)))
-    axs[1].set_xticklabels(Crange, rotation=45)
-    axs[1].set_yticks(np.arange(len(GammaRange)))
-    axs[1].set_yticklabels(GammaRange)
-    axs[1].set_xlabel('C')
-    axs[1].set_ylabel('Gamma')
+    axs[1].set_yticks(np.arange(len(Crange)))
+    axs[1].set_yticklabels(Crange, rotation=45)
+    axs[1].set_xticks(np.arange(len(GammaRange)))
+    axs[1].set_xticklabels(GammaRange, rotation=45)
+    axs[1].set_ylabel('C')
+    axs[1].set_xlabel('Gamma')
 
     for idxi, i in enumerate(Crange):
         for idxj, j in enumerate(GammaRange):
