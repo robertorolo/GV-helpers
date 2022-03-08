@@ -28,10 +28,9 @@ def class_max_percentage_change(y, s):
 
 def svc_smoothing_calibration(X, Y, Z, y, outfl):
     tick = time.time()
-    #Crange = [10**i for i in range(-3, 3)]
-    #GammaRange = [10**i for i in range(-3, 3)]
-    Crange = [10**i for i in range(-4, 4)]
-    GammaRange = [10**i for i in range(-4, 4)]
+
+    Crange = [10**i for i in range(-3+3, 3+3)]
+    GammaRange = [10**i for i in range(-3-4, 3-4)]
 
     matshape = (len(Crange), len(GammaRange))
     accmat = np.zeros(matshape)
@@ -57,20 +56,20 @@ def svc_smoothing_calibration(X, Y, Z, y, outfl):
     axs[0].imshow(accmat.T)
     axs[1].imshow(changemat.T)
 
-    axs[0].set_yticks(np.arange(len(Crange)))
-    axs[0].set_yticklabels(Crange, rotation=45)
-    axs[0].set_xticks(np.arange(len(GammaRange)))
-    axs[0].set_xticklabels(GammaRange, rotation=45)
-    axs[0].set_ylabel('C')
-    axs[0].set_xlabel('Gamma')
+    axs[0].set_xticks(np.arange(len(Crange)))
+    axs[0].set_xticklabels(Crange, rotation=45)
+    axs[0].set_yticks(np.arange(len(GammaRange)))
+    axs[0].set_yticklabels(GammaRange, rotation=45)
+    axs[0].set_xlabel('C')
+    axs[0].set_ylabel('Gamma')
 
 
-    axs[1].set_yticks(np.arange(len(Crange)))
-    axs[1].set_yticklabels(Crange, rotation=45)
-    axs[1].set_xticks(np.arange(len(GammaRange)))
-    axs[1].set_xticklabels(GammaRange, rotation=45)
-    axs[1].set_ylabel('C')
-    axs[1].set_xlabel('Gamma')
+    axs[1].set_xticks(np.arange(len(Crange)))
+    axs[1].set_xticklabels(Crange, rotation=45)
+    axs[1].set_yticks(np.arange(len(GammaRange)))
+    axs[1].set_yticklabels(GammaRange, rotation=45)
+    axs[1].set_xlabel('C')
+    axs[1].set_ylabel('Gamma')
 
     for idxi, i in enumerate(Crange):
         for idxj, j in enumerate(GammaRange):
@@ -82,6 +81,7 @@ def svc_smoothing_calibration(X, Y, Z, y, outfl):
 
     plt.tight_layout()
     plt.savefig(outfl, bbox_inches='tight', transparent=False)
+    
     tack = time.time()
     delta = tack - tick
     print('Took {} s'.format(round(delta, 2)))
