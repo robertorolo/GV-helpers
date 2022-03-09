@@ -20,12 +20,8 @@ def cat1_in_cat2(cat1, cat2, outfl='cat1incat2.png'):
             cat1_filter = cat1 == j
             both = np.logical_and(cat2_filter, cat1_filter)
             heights.append(np.sum(both))
-
-        if idx == 0:
-            plt.bar(x_ticks, heights, label=i)
-        else:
-            plt.bar(x_ticks, heights, label=i, bottom=heights_sum)
-
+        
+        plt.bar(x_ticks, heights, label=i, bottom=heights_sum)
         heights_sum = heights_sum + np.array(heights)
 
     plt.xticks(x_ticks, x_labels, rotation='vertical')
