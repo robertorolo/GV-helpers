@@ -56,8 +56,8 @@ class DDHBHanalysis:
             axs[0].scatter(self.bh_array, self.ddh_array, color='black')
 
             axs[0].set_title('Scatterplot')
-            axs[0].set_ylabel('DDH')
-            axs[0].set_xlabel('BH')
+            axs[0].set_ylabel('DDH: mean {} - std {}'.format(round(np.mean(self.ddh_array), 2), round(np.std(self.ddh_array), 2)))
+            axs[0].set_xlabel('BH: mean {} - std {}'.format(round(np.mean(self.bh_array), 2), round(np.std(self.bh_array), 2)))
             axs[0].set_ylim([min_val, max_val])
             axs[0].set_xlim([min_val, max_val])
             axs[0].legend(loc='upper left')
