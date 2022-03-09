@@ -26,7 +26,7 @@ def class_max_percentage_change(y, s):
     
     return np.max(perc_change)
 
-def svc_smoothing_calibration(X, Y, Z, y, outfl):
+def svc_smoothing_calibration(X, Y, Z, y, outfl, sampling=1.0):
     tick = time.time()
 
     Crange = [10**i for i in range(-3+3, 3+3)]
@@ -37,19 +37,24 @@ def svc_smoothing_calibration(X, Y, Z, y, outfl):
     changemat = np.zeros((len(Crange), len(GammaRange)))
 
     X = np.array([X, Y, Z]).T
+
+    idxs = np.arange(y.size)
+    sidxs = np.random.choice(idxs, size=int(sampling*idxs.size), replace=False)
+    X_t = X[sidxs]
+    y_t = y[sidxs]
     
     for idxi, i in enumerate(Crange):
         for idxj, j in enumerate(GammaRange):
             smooth_model = SVC(kernel='rbf', C=i, gamma=j)
 
-            smooth_model.fit(X, y)
+            smooth_model.fit(X_t, y_t)
 
-            s = smooth_model.predict(X)
+            s = smooth_model.predict(X_t)
 
-            acc = accuracy_score(y, s)
+            acc = accuracy_score(y_t, s)
             accmat[idxi, idxj] = round(acc, 2)
 
-            perchange = class_max_percentage_change(y, s)
+            perchange = class_max_percentage_change(y_t, s)
             changemat[idxi, idxj] = round(perchange, 2)
 
     fig, axs = plt.subplots(1, 2, figsize=(10,5))
@@ -83,5 +88,5 @@ def svc_smoothing_calibration(X, Y, Z, y, outfl):
     plt.savefig(outfl, bbox_inches='tight', transparent=False)
     
     tack = time.time()
-    delta = tack - tick
-    print('Took {} s'.format(round(delta, 2)))
+    delta = int((tack - tick)/60)
+    print('Took {} mins'.format(delta))
