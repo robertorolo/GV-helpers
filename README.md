@@ -19,6 +19,12 @@ Plots bar graph given two categorical variables.
 
 ![cat1_in_cat2](/figs/KMeansLito.png)
 
+### corr_to_target
+
+PLots scatterplots of a series of variables in respect to a target colored by a categorical variable.
+
+![cat1_in_cat2](/figs/corrWeath.png)
+
 ### DDH_BH_analysys
 
 Plots a DDH vs BH analysis given two arrays of twin samples.
