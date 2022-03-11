@@ -13,7 +13,7 @@ Then, import the desired module as shown below. The file must be in the same fol
 
     import DDH_BH_analysis
 
-### ca1_1_in_cat2
+### ca1_in_cat2
 
 Plots bar graph given two categorical variables.
 
