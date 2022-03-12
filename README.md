@@ -23,7 +23,7 @@ Boxplots for a list of variables per domains.
 
 Plots bar graph given two categorical variables.
 
-![cat1_in_cat2](/figs/KMeansLito.png)
+![cat1_in_cat2](/figs/kmeansweath.png)
 
 ### confusion matrix
 
