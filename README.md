@@ -13,17 +13,29 @@ Then, import the desired module as shown below. The file must be in the same fol
 
     import DDH_BH_analysis
 
+### boxplots
+
+Boxplots for a list of variables per domains.
+
+![cat1_in_cat2](/figs/boxplotsKmeans.png)
+
 ### ca1_in_cat2
 
 Plots bar graph given two categorical variables.
 
 ![cat1_in_cat2](/figs/KMeansLito.png)
 
+### confusion matrix
+
+A simple confusion matrix.
+
+![cat1_in_cat2](/figs/cmallvar.png)
+
 ### corr_to_target
 
 PLots scatterplots of a series of variables in respect to a target colored by a categorical variable.
 
-![cat1_in_cat2](/figs/corrWeath.png)
+![cat1_in_cat2](/figs/corrWeathGlobal.png)
 
 ### DDH_BH_analysys
 

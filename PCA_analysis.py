@@ -36,8 +36,8 @@ class PCA_analysis:
         axs[1].set_yticks([i for i in range(self.pca.n_components_)], labels=['PC{}'.format(i) for i in range(1,self.pca.n_components_+1)], rotation='horizontal')
         for idxi, i in enumerate(range(self.pca.components_.shape[0])):
             for idxj, j in enumerate(range(self.pca.components_.shape[1])):
-                axs[1].text(idxj, idxi, round(self.pca.components_[idxi, idxj], 2), ha="center", va="center", color="gray")
-                axs[1].text(idxj, idxi, round(self.pca.components_[idxi, idxj], 2), ha="center", va="center", color="gray")
+                axs[1].text(idxj, idxi, round(self.pca.components_[idxi, idxj], 2), ha="center", va="center", color="black")
+                axs[1].text(idxj, idxi, round(self.pca.components_[idxi, idxj], 2), ha="center", va="center", color="black")
 
         #plotting scatter
         pc1, pc2 = self.pcs[:, 0], self.pcs[:, 1]

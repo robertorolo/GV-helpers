@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def cat1_in_cat2(cat1, cat2, outfl='cat1incat2.png'):
+def cat1_in_cat2(cat1, cat2, title, outfl='cat1incat2.png'):
     fig = plt.figure(figsize=(12,8))
 
     x_labels = np.unique(cat1)
@@ -26,6 +26,7 @@ def cat1_in_cat2(cat1, cat2, outfl='cat1incat2.png'):
 
     plt.xticks(x_ticks, x_labels, rotation='vertical')
     plt.ylabel('# samples')
+    plt.title(title)
     plt.legend()
 
     plt.savefig(outfl, bbox_inches='tight', facecolor='white')
