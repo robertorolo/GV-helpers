@@ -55,6 +55,12 @@ Plots to help PCA analysis.
 
 ![PCA_circles](/figs/PCAcircle.png)
 
+### proportional_effect
+
+Plots proportional effect per domain.
+
+![proportional_effect](./figs/propeffect.png)
+
 ### SVC_smoothing_calibration
 
 Reference: Cevik, I.S., Leuangthong, O., Caté, A. et al. On the Use of Machine Learning for Mineral Resource Classification. Mining, Metallurgy & Exploration 38, 2055–2073 (2021). https://doi.org/10.1007/s42461-021-00478-9

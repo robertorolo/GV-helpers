@@ -72,7 +72,7 @@ class DDHBHanalysis:
             Relative bias {}
             Slope {}
             R-squared {}
-            removed outliers {}
+            Removed outliers {}
             '''.format(len(self.bh_array), mse.round(2), rel_bias.round(2), slope.round(2), r_value.round(2), self.num_outf)
             axs[0].plot(x_d, y_r, color='gray', linestyle='--', label='Regression line')
             axs[0].annotate(statsvals, xy=(0.55, 0.0), xycoords='axes fraction', color='gray')

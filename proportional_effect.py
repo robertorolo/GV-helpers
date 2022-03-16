@@ -1,8 +1,8 @@
 import math
-import numpy as np
+import numpy as np 
 import matplotlib.pyplot as plt
 
-def boxplots(vars_array, vars_names_array, cat, title, outfl):
+def proportional_effect(vars_array, var_names_array, cat, title, outfl):
     n_var = len(vars_array)
     n_lines = math.ceil(n_var/3)
     fig, axs = plt.subplots(n_lines, 3, figsize=(15,15))
@@ -12,15 +12,20 @@ def boxplots(vars_array, vars_names_array, cat, title, outfl):
     unique_cats = np.unique(cat)
 
     for i, v in enumerate(vars_array):
-        print('Processing {}'.format(vars_names_array[i]))
+        for j, d in enumerate(unique_cats):
 
-        fdef = np.isfinite(v)
-        v = v[fdef]
-        cat_aux = cat[fdef]
-        
-        axs[i].boxplot([v[cat_aux==c] for c in unique_cats], labels=unique_cats)
-        axs[i].set_title(vars_names_array[i])
+            catf = cat == d
+
+            mean = np.nanmean(v[catf])
+            std = np.nanstd(v[catf])
+
+            axs[i].scatter([mean], [std], label=d, s=30, marker='s')
+
+        axs[i].set_title(var_names_array[i])
         axs[i].grid()
+        axs[i].legend()
+        axs[i].set_xlabel('Mean')
+        axs[i].set_ylabel('Std dev')
 
     iidx = n_lines*3-(n_lines*3-len(vars_array))
     axs_to_remove = np.arange(iidx, n_lines*3)
