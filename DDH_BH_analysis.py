@@ -1,19 +1,41 @@
 import numpy as np
 from scipy import stats
+from scipy.spatial.distance import mahalanobis
+from scipy.linalg import inv
+from scipy.stats import chi2
 import matplotlib.pyplot as plt
+
+def flag_outlier(x, y):
+    X = np.array([x, y]).T
+    mdists = np.array([mahalanobis(i , np.mean(X,axis=0), inv(np.cov(X.T))) for i in X])
+    p = 1 - chi2.cdf(mdists, 1)
+    outlier_flag = p < .001
+
+    return outlier_flag
 
 class DDHBHanalysis:
     def __init__(self, var_name, ddh_array, bh_array, KSAlpha=0.05):
         if ddh_array.size != bh_array.size:
             print('Arrays do not have the same size!')
+
         else:
+            
             ddhdefined = np.isfinite(ddh_array)
             bhdefined = np.isfinite(bh_array)
             bothdefined = np.logical_and(ddhdefined, bhdefined)
             self.var_name = var_name
-            self.ddh_array = ddh_array[bothdefined]
-            self.bh_array = bh_array[bothdefined]
+            ddh_array = ddh_array[bothdefined]
+            bh_array = bh_array[bothdefined]
             self.KSAlpha = KSAlpha
+
+            outf = flag_outlier(ddh_array, bh_array)
+            self.ddh_all = ddh_array
+            self.bh_all = bh_array
+            self.ddh_array = ddh_array[~outf]
+            self.bh_array = bh_array[~outf]
+            self.ddh_out = ddh_array[outf]
+            self.bh_out = bh_array[outf]
+            self.num_outf = np.sum(outf)
 
     def plot_analysis(self, outfl=None):
         if self.ddh_array.size == 0 or self.bh_array.size == 0:
@@ -25,8 +47,8 @@ class DDHBHanalysis:
             fig, axs = plt.subplots(1, 3, figsize=(20,5))
 
             #defining minimum and maximum values
-            min_val = np.min([np.nanmin(self.bh_array), np.nanmin(self.ddh_array)])
-            max_val = np.max([np.nanmax(self.bh_array), np.nanmax(self.ddh_array)])
+            min_val = np.min([np.nanmin(self.bh_all), np.nanmin(self.ddh_all)])
+            max_val = np.max([np.nanmax(self.bh_all), np.nanmax(self.ddh_all)])
 
             #scatter plot
             axs[0].plot([min_val, max_val], [min_val, max_val], color='red')
@@ -50,10 +72,13 @@ class DDHBHanalysis:
             Relative bias {}
             Slope {}
             R-squared {}
-            '''.format(len(self.bh_array), mse.round(2), rel_bias.round(2), slope.round(2), r_value.round(2))
+            removed outliers {}
+            '''.format(len(self.bh_array), mse.round(2), rel_bias.round(2), slope.round(2), r_value.round(2), self.num_outf)
             axs[0].plot(x_d, y_r, color='gray', linestyle='--', label='Regression line')
             axs[0].annotate(statsvals, xy=(0.55, 0.0), xycoords='axes fraction', color='gray')
             axs[0].scatter(self.bh_array, self.ddh_array, color='black')
+            if self.num_outf != 0:
+                axs[0].scatter(self.bh_out, self.ddh_out, color='green', label='outliers')
 
             axs[0].set_title('Scatterplot')
             axs[0].set_ylabel('DDH: mean {} - std {}'.format(round(np.mean(self.ddh_array), 2), round(np.std(self.ddh_array), 2)))
