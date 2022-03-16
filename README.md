@@ -41,7 +41,7 @@ PLots scatterplots of a series of variables in respect to a target colored by a 
 
 Plots a DDH vs BH analysis given two arrays of twin samples.
 
-![DDH_BH](/figs/P2O5_%25.png)
+![DDH_BH](./figs/NB2O5_%25.png)
 
 ### outliers_helpers
 
