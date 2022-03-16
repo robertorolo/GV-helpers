@@ -3,20 +3,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def boxplots(vars_array, vars_names_array, cat, title, outfl):
-    cat = np.array([str(i) for i in cat])
     n_var = len(vars_array)
     n_lines = math.ceil(n_var/3)
     fig, axs = plt.subplots(n_lines, 3, figsize=(15,15))
-
-    cat_f = [isinstance(i, str) for i in cat]
-    cat = cat[cat_f]
-    vars_array = [i[cat_f] for i in vars_array]
 
     axs = axs.flatten()
 
     unique_cats = np.unique(cat)
 
     for i, v in enumerate(vars_array):
+        print('Processing {}'.format(vars_names_array[i]))
 
         fdef = np.isfinite(v)
         v = v[fdef]
@@ -30,7 +26,6 @@ def boxplots(vars_array, vars_names_array, cat, title, outfl):
     axs_to_remove = np.arange(iidx, n_lines*3)
     for i in axs_to_remove:
         axs[i].set_visible(False)
-
 
     fig.suptitle(title)
 
