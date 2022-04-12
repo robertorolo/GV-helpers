@@ -11,10 +11,12 @@ def hist_cat(cat, title, outfl):
 
     plt.bar(x_ticks, heights)
 
+    for x, y in zip(x_ticks, heights):
+        plt.annotate(str(y), (x, y), ha='center')
+
     plt.xticks(x_ticks, x_labels, rotation='vertical')
     plt.ylabel('# samples')
     plt.title(title)
-    plt.legend()
     plt.grid()
 
     plt.savefig(outfl, bbox_inches='tight', facecolor='white')

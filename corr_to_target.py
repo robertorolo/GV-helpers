@@ -1,12 +1,24 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import cm
+
+def discrete_cmap(N, base_cmap='jet'):
+    """Create an N-bin discrete colormap from the specified input map"""
+
+    # Note that if base_cmap is a string or None, you can simply do
+    #    return plt.cm.get_cmap(base_cmap, N)
+    # The following works for string, None, or a colormap instance:
+
+    base = plt.cm.get_cmap(base_cmap)
+    color_list = base(np.linspace(0, 1, N))
+    cmap_name = base.name + str(N)
+    return base.from_list(cmap_name, color_list, N)
+
 
 def correlations_to_target(vars_array, vars_names_array, target, target_name, cat, title, outfl):
     n_var = len(vars_array)
     n_lines = math.ceil(n_var/3)
-    fig, axs = plt.subplots(n_lines, 3, figsize=(15,15))
+    fig, axs = plt.subplots(n_lines, 3, figsize=(15,20))
 
     axs = axs.flatten()
 
@@ -21,13 +33,16 @@ def correlations_to_target(vars_array, vars_names_array, target, target_name, ca
     cat_num = [cat_map[i] for i in cat]
 
     n = len(unique_cats)
-    ht = (n-1)/n*1/2
+    tick_dif = (n-1)/(2*n)
 
     for i, v in enumerate(vars_array):
 
-        cmap = cm.get_cmap('jet', len(unique_cats))
-        rho = np.corrcoef(v, target)
+        tdef = np.isfinite(target)
+        vdef = np.isfinite(v)
+        bdef = np.logical_and(tdef, vdef)
+        rho = np.corrcoef(v[bdef], target[bdef])
         
+        cmap = discrete_cmap(N=n, base_cmap='jet')
         sc = axs[i].scatter(v, target, c=cat_num, s=2, cmap=cmap)
         axs[i].set_xlabel(vars_names_array[i])
         axs[i].set_ylabel(target_name)
@@ -35,9 +50,9 @@ def correlations_to_target(vars_array, vars_names_array, target, target_name, ca
         axs[i].annotate('rho: {}'.format(rho[1][0].round(2)), xy=(0.7, 0.05), xycoords='axes fraction', color='black')
         
         cbar = fig.colorbar(sc, ax=axs[i])
-        tick_locs = np.linspace(ht, (n-1) - ht, n)
-        cbar.set_ticks(tick_locs)
-        cbar.set_ticklabels([inv_map[i] for i in np.arange(len(unique_cats))])
+        loc = np.linspace(1+tick_dif,5-tick_dif,n)
+        cbar.set_ticks(loc)
+        cbar.set_ticklabels([inv_map[i] for i in np.arange(n)])
 
     iidx = n_lines*3-(n_lines*3-len(vars_array))
     axs_to_remove = np.arange(iidx, n_lines*3)
@@ -48,6 +63,5 @@ def correlations_to_target(vars_array, vars_names_array, target, target_name, ca
     fig.suptitle(title)
 
     plt.tight_layout()
-
 
     plt.savefig(outfl, bbox_inches='tight', facecolor='white')
