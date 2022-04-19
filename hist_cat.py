@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 def hist_cat(cat, title, outfl):
     fig = plt.figure(figsize=(12,8))
 
+    defined_filter = [isinstance(x, str) for x in cat]
+    cat = cat[defined_filter]
+
     x_labels = np.unique(cat)
     x_ticks = [i for i in range(len(x_labels))]
 

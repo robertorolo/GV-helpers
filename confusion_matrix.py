@@ -3,9 +3,9 @@ from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 
 def confusion_matrix_plot(clf, y_true, y_pred, title, outfl):
-    cm = confusion_matrix(y_true, y_pred, normalize='all')
+    cm = confusion_matrix(y_true, y_pred, normalize='true')
 
-    fig, axs = plt.subplots(1,1, figsize=(5,5))
+    fig, axs = plt.subplots(1,1, figsize=(8,8))
 
     acc = round(accuracy_score(y_true, y_pred), 2)
 
@@ -15,5 +15,3 @@ def confusion_matrix_plot(clf, y_true, y_pred, title, outfl):
     disp.plot(ax=axs, cmap='Blues', colorbar=False)
 
     plt.savefig(outfl, facecolor='white', bbox_inches='tight')
-    
-
