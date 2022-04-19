@@ -2,13 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
 
-def validation_plot(v1, v2, title, outfl):
+def validation_plot(estimated, true, title, outfl):
 
-    edefined = np.isfinite(v1)
-    tdefined = np.isfinite(v2)
+    edefined = np.isfinite(estimated)
+    tdefined = np.isfinite(true)
     bothdefined = np.logical_and(edefined, tdefined)
-    estimated = v1[bothdefined]
-    true = v2[bothdefined]
+    estimated = estimated[bothdefined]
+    true = true[bothdefined]
 
     fig, axs = plt.subplots(1, 3, figsize=(20,6))
     min_val = np.min([np.nanmin(estimated), np.nanmin(true)])
