@@ -29,8 +29,8 @@ def class_max_percentage_change(y, s):
 def svc_smoothing_calibration(X, Y, Z, y, outfl, sampling=1.0):
     tick = time.time()
 
-    Crange = [10**i for i in range(-3+3, 3+3)]
-    GammaRange = [10**i for i in range(-3-4, 3-4)]
+    Crange = [10**i for i in range(-3, 3)]
+    GammaRange = [10**i for i in range(-3, 3)]
 
     matshape = (len(Crange), len(GammaRange))
     accmat = np.zeros(matshape)
@@ -89,7 +89,7 @@ def svc_smoothing_calibration(X, Y, Z, y, outfl, sampling=1.0):
     axs[1].set_title('Maximum percent change')
 
     plt.tight_layout()
-    plt.savefig(outfl, bbox_inches='tight', transparent=False)
+    plt.savefig(outfl, bbox_inches='tight', facecolor='white')
     
     tack = time.time()
     delta = int((tack - tick)/60)
