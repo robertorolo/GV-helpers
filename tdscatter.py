@@ -12,7 +12,6 @@ def tdscatter(x, y, z, c, zex, outfl):
     
     ax.set_box_aspect((np.ptp(x), np.ptp(y), zex*np.ptp(z)))  # aspect ratio is 1:1:1 in data space
 
-    
     ax.scatter3D(x, y, z, c = c, s=2, cmap='jet')
 
     plt.tight_layout()

@@ -10,7 +10,7 @@ def confusion_matrix_plot(clf, y_true, y_pred, title, outfl):
     acc = round(accuracy_score(y_true, y_pred), 2)
 
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
-    axs.set_title('{} - acc {}'.format(title, acc))
+    axs.set_title('{} - acc {} - n {}'.format(title, acc, len(y_true)))
 
     disp.plot(ax=axs, cmap='Blues', colorbar=False)
 
