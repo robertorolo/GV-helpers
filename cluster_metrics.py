@@ -34,7 +34,7 @@ def plt_cluster_metrics(Tdata, k, outfl):
         db_scores_h.append(davies_bouldin_score(Tdata, labels))
 
     x = [i for i in range(2,k)]
-    fig, axs = plt.subplots(2, 2, figsize=(10,5))
+    fig, axs = plt.subplots(2, 2, figsize=(15,7.5))
     axs[0][0].set_ylabel('Calinski-Harabasz')
     axs[0][0].set_xlabel('# clusters')
     axs[0][0].set_xticks(x)
