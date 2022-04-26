@@ -56,7 +56,8 @@ def correlations_to_target(vars_array, vars_names_array, target, target_name, ca
         axs[i].set_xlabel(vars_names_array[i])
         axs[i].set_ylabel(target_name)
         axs[i].grid()
-        axs[i].annotate('rho: {}'.format(rho[1][0].round(2)), xy=(0.7, 0.05), xycoords='axes fraction', color='black')
+        #axs[i].annotate('rho: {}'.format(rho[1][0].round(2)), xy=(0.7, 0.05), xycoords='axes fraction', color='black')
+        axs[i].set_title('rho: {}'.format(rho[1][0].round(2)))
         
         cbar = fig.colorbar(sc, ax=axs[i])
         loc = np.linspace(tick_dif,(n-1)-tick_dif,n)
