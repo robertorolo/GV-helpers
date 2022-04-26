@@ -15,10 +15,19 @@ def discrete_cmap(N, base_cmap='jet'):
     return base.from_list(cmap_name, color_list, N)
 
 
-def correlations_to_target(vars_array, vars_names_array, target, target_name, cat, title, outfl):
+def correlations_to_target(vars_array, vars_names_array, target, target_name, cat, nmax, figsize, title, outfl):
     n_var = len(vars_array)
     n_lines = math.ceil(n_var/3)
-    fig, axs = plt.subplots(n_lines, 3, figsize=(15,20))
+    fig, axs = plt.subplots(n_lines, 3, figsize=figsize)
+
+    if nmax is not None:
+        idxs = np.arange(len(vars_array[0]))
+        ridxs = np.random.choice(idxs, size=nmax, replace=False)
+        vars_array = [i[ridxs] for i in vars_array]
+        cat = np.array(cat)[ridxs]
+        target = target[ridxs]
+    else:
+        pass
 
     axs = axs.flatten()
 
@@ -50,7 +59,7 @@ def correlations_to_target(vars_array, vars_names_array, target, target_name, ca
         axs[i].annotate('rho: {}'.format(rho[1][0].round(2)), xy=(0.7, 0.05), xycoords='axes fraction', color='black')
         
         cbar = fig.colorbar(sc, ax=axs[i])
-        loc = np.linspace(1+tick_dif,5-tick_dif,n)
+        loc = np.linspace(tick_dif,(n-1)-tick_dif,n)
         cbar.set_ticks(loc)
         cbar.set_ticklabels([inv_map[i] for i in np.arange(n)])
 
@@ -60,7 +69,7 @@ def correlations_to_target(vars_array, vars_names_array, target, target_name, ca
         axs[i].set_visible(False)
 
 
-    fig.suptitle(title)
+    #fig.suptitle(title)
 
     plt.tight_layout()
 

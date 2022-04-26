@@ -3,6 +3,10 @@ import matplotlib.pyplot as plt
 from scipy.stats import gaussian_kde
 
 def scatter_plot(x, y, ax, c=None):
+    xdef = np.isfinite(x)
+    ydef = np.isfinite(y)
+    bothdef = np.logical_and(xdef, ydef)
+    x, y = x[bothdef], y[bothdef]
     if c is None:
         xy = np.vstack([x, y])
         c = gaussian_kde(xy)(xy)
@@ -13,7 +17,7 @@ def scatter_plot(x, y, ax, c=None):
     ax.set_title('rho: {}'.format(corr))
 
 
-def scatter_matrix(vars_array, vars_name, title, outfl, nmax=None, cat=None):
+def scatter_matrix(vars_array, vars_name, figsize, outfl, nmax=None, cat=None):
     if nmax is not None:
         idxs = np.arange(len(vars_array[0]))
         ridxs = np.random.choice(idxs, size=nmax, replace=False)
@@ -23,7 +27,7 @@ def scatter_matrix(vars_array, vars_name, title, outfl, nmax=None, cat=None):
 
     data = np.array(vars_array)
     numvars, numdata = data.shape
-    fig, axes = plt.subplots(nrows=numvars, ncols=numvars, figsize=(12,12))
+    fig, axes = plt.subplots(nrows=numvars, ncols=numvars, figsize=figsize)
 
     for i, j in zip(*np.triu_indices_from(axes, k=1)):
         for x, y in [(i,j), (j,i)]:
