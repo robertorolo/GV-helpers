@@ -11,4 +11,7 @@ Add the code below to your calculator initialization script.
 
 Then, import the desired module as shown below. The file must be in the same folder as the batch file.
 
+    import importlib
+    importlib.reload(DDH_BH_analysis)
+
     import DDH_BH_analysis

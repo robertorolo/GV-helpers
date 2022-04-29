@@ -15,10 +15,10 @@ def discrete_cmap(N, base_cmap='jet'):
     return base.from_list(cmap_name, color_list, N)
 
 
-def correlations_to_target(vars_array, vars_names_array, target, target_name, cat, nmax, figsize, title, outfl):
+def correlations_to_target(vars_array, vars_names_array, target, target_name, cat, nmax, ncols, figsize, title, outfl):
     n_var = len(vars_array)
-    n_lines = math.ceil(n_var/3)
-    fig, axs = plt.subplots(n_lines, 3, figsize=figsize)
+    n_lines = math.ceil(n_var/ncols)
+    fig, axs = plt.subplots(n_lines, ncols, figsize=figsize)
 
     if nmax is not None:
         idxs = np.arange(len(vars_array[0]))
@@ -64,13 +64,10 @@ def correlations_to_target(vars_array, vars_names_array, target, target_name, ca
         cbar.set_ticks(loc)
         cbar.set_ticklabels([inv_map[i] for i in np.arange(n)])
 
-    iidx = n_lines*3-(n_lines*3-len(vars_array))
-    axs_to_remove = np.arange(iidx, n_lines*3)
+    iidx = n_lines*ncols-(n_lines*ncols-len(vars_array))
+    axs_to_remove = np.arange(iidx, n_lines*ncols)
     for i in axs_to_remove:
         axs[i].set_visible(False)
-
-
-    #fig.suptitle(title)
 
     plt.tight_layout()
 
