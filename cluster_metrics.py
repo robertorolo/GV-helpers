@@ -35,6 +35,7 @@ def plt_cluster_metrics(Tdata, k, outfl):
 
     x = [i for i in range(2,k)]
     fig, axs = plt.subplots(2, 2, figsize=(15,7.5))
+    axs[0][0].set_title('Higher is better')
     axs[0][0].set_ylabel('Calinski-Harabasz')
     axs[0][0].set_xlabel('# clusters')
     axs[0][0].set_xticks(x)
@@ -43,6 +44,7 @@ def plt_cluster_metrics(Tdata, k, outfl):
     axs[0][0].grid()
     axs[0][0].legend()
 
+    axs[0][1].set_title('CLoser to zero is better')
     axs[0][1].set_ylabel('Davies-Bouldin')
     axs[0][1].set_xlabel('# clusters')
     axs[0][1].set_xticks(x)
@@ -51,6 +53,7 @@ def plt_cluster_metrics(Tdata, k, outfl):
     axs[0][1].grid()
 
 
+    axs[1][0].set_title('Higher is better')
     axs[1][0].set_ylabel('Silhouette')
     axs[1][0].set_xlabel('# clusters')
     axs[1][0].set_xticks(x)
@@ -59,6 +62,7 @@ def plt_cluster_metrics(Tdata, k, outfl):
     axs[1][0].grid()
 
 
+    axs[1][1].set_title('Use the elbow method')
     axs[1][1].set_ylabel('KMeans Inertia')
     axs[1][1].set_xlabel('# clusters')
     axs[1][1].set_xticks(x)
