@@ -1,8 +1,9 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
-def boxplots(vars_array, vars_names_array, cat, title, outfl):
+def boxplots(vars_array, vars_names_array, cat, title, outfl, cmap='jet'):
     n_var = len(vars_array)
     n_lines = math.ceil(n_var/3)
     fig, axs = plt.subplots(n_lines, 3, figsize=(15,15))
@@ -10,6 +11,8 @@ def boxplots(vars_array, vars_names_array, cat, title, outfl):
     axs = axs.flatten()
 
     unique_cats = np.unique(cat)
+    cmap = matplotlib.cm.get_cmap(cmap, len(unique_cats))
+    colors = [matplotlib.colors.rgb2hex(cmap(i)[:3]) for i in range(cmap.N)]
 
     for i, v in enumerate(vars_array):
         print('Processing {}'.format(vars_names_array[i]))
@@ -18,7 +21,11 @@ def boxplots(vars_array, vars_names_array, cat, title, outfl):
         v = v[fdef]
         cat_aux = cat[fdef]
         
-        axs[i].boxplot([v[cat_aux==c] for c in unique_cats], labels=unique_cats)
+        bplot = axs[i].boxplot([v[cat_aux==c] for c in unique_cats], labels=unique_cats, patch_artist=True, notch=True)
+        
+        for patch, color in zip(bplot['boxes'], colors):
+            patch.set_facecolor(color)
+        
         axs[i].set_title(vars_names_array[i])
         axs[i].grid()
 
