@@ -2,6 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
+from sympy import rotations
 
 def boxplots(vars_array, vars_names_array, cat, title, outfl, cmap='jet'):
     n_var = len(vars_array)
@@ -21,7 +22,8 @@ def boxplots(vars_array, vars_names_array, cat, title, outfl, cmap='jet'):
         v = v[fdef]
         cat_aux = cat[fdef]
         
-        bplot = axs[i].boxplot([v[cat_aux==c] for c in unique_cats], labels=unique_cats, patch_artist=True, notch=True)
+        bplot = axs[i].boxplot([v[cat_aux==c] for c in unique_cats], labels=unique_cats, patch_artist=True, notch=False)
+        axs[i].tick_params(axis='x', labelrotation = 90)
         
         for patch, color in zip(bplot['boxes'], colors):
             patch.set_facecolor(color)
