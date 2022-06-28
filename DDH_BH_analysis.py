@@ -207,7 +207,7 @@ class DDHBHanalysis:
             axs[4].hlines(y=p90, xmin=0, xmax=90, color='red', linestyles='--')
 
             axs[4].set_xlabel('Samples proportion')
-            axs[4].set_ylabel('Relative error')
+            axs[4].set_ylabel('Hard (%)')
             axs[4].set_title('Hard plot')
             axs[4].grid()
             axs[4].set_xlim(0,100)
