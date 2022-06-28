@@ -188,11 +188,11 @@ class DDHBHanalysis:
             axs[3].grid()
 
             #hard plot
+            rel_bias = 2*100*bias/((self.ddh_array+self.bh_array)/2) #relative change
             sort_idxs = np.argsort(abs_rel_bias)
             ordered_rel_bias = abs_rel_bias[sort_idxs]
             hard = ordered_rel_bias/2
-            sum_hard = np.cumsum(ordered_rel_bias)
-            sum_hard = (sum_hard - np.min(sum_hard)) / (np.max(sum_hard) - np.min(sum_hard)) * 100
+            sum_hard = hard
             perc_samples = np.array([100*(i+1)/len(sort_idxs) for i in range(len(sort_idxs))])
 
             axs[4].scatter(perc_samples, sum_hard, c='blue', marker='o', s=1)
